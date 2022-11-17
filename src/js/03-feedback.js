@@ -10,17 +10,28 @@ checkStorage();
 
 function onFormInput(e) { 
     formData[e.target.name] = e.target.value;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+    }
+    catch (error) { 
+        console.log(error.name); 
+        console.log(error.message); 
+    }
+
+    
 };
 
 function checkStorage() { 
     const savedData = localStorage.getItem(STORAGE_KEY);
-        if (savedData) {
+    if (savedData) {
+        try {
             formData = JSON.parse(savedData);
-            
-            for (let elem in formData) { 
+             for (let elem in formData) { 
                 refs.form.elements[elem].value = formData[elem];
             };
+        }
+        catch (error) { 
+        } 
     };
 
 };
